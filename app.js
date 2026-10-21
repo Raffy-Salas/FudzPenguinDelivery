@@ -86,7 +86,6 @@ const Storage = {
     KEY_ORDERS: 'fudz_orders',
     KEY_CART: 'fudz_cart',
 
-    // Memory cache to keep UI responsive while syncing with Firestore
     cache: {
         fudz_users: [],
         fudz_menu: INITIAL_MENU,
@@ -109,7 +108,7 @@ const Storage = {
                 }
             }
         } catch (e) {
-            console.error("Firebase init error, fallback to localStorage:", e);
+            console.error("Firebase init error, fallback to local cache:", e);
         }
     },
 
@@ -229,13 +228,13 @@ const AuthUI = {
         if (tab === 'login') {
             loginBtn.className = 'flex-1 py-2 text-xs font-bold rounded-lg transition text-white bg-arctic-600 shadow';
             regBtn.className = 'flex-1 py-2 text-xs font-bold rounded-lg transition text-slate-400 hover:text-white';
-            loginForm.classList.remove('hidden');
-            regForm.classList.add('hidden');
+            if (loginForm) loginForm.classList.remove('hidden');
+            if (regForm) regForm.classList.add('hidden');
         } else {
             regBtn.className = 'flex-1 py-2 text-xs font-bold rounded-lg transition text-white bg-arctic-600 shadow';
             loginBtn.className = 'flex-1 py-2 text-xs font-bold rounded-lg transition text-slate-400 hover:text-white';
-            regForm.classList.remove('hidden');
-            loginForm.classList.add('hidden');
+            if (regForm) regForm.classList.remove('hidden');
+            if (loginForm) loginForm.classList.add('hidden');
         }
     },
     handleLogin(e) {
